@@ -1,0 +1,227 @@
+CellProfiler Pipeline: http://www.cellprofiler.org
+Version:5
+DateRevision:407
+GitHash:
+ModuleCount:10
+HasImagePlaneDetails:False
+
+Images:[module_num:1|svn_version:'Unknown'|variable_revision_number:2|show_window:False|notes:['To begin creating your project, use the Images module to compile a list of files and/or folders that you want to analyze. You can also specify a set of rules to include only the desired files in your selected folders.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    :
+    Filter images?:Images only
+    Select the rule criteria:and (extension does isimage) (directory doesnot containregexp "[\\\\/]\\.")
+
+Metadata:[module_num:2|svn_version:'Unknown'|variable_revision_number:6|show_window:False|notes:['The Metadata module optionally allows you to extract information describing your images (i.e, metadata) which will be stored along with your measurements. This information can be contained in the file name and/or location, or in an external file.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Extract metadata?:Yes
+    Metadata data type:Text
+    Metadata types:{}
+    Extraction method count:1
+    Metadata extraction method:Extract from file/folder names
+    Metadata source:File name
+    Regular expression to extract from file name:^(?P<Type>.*)_(?P<Sample01>[E][0-9]{2}).(?P<Sample02>[0-9]{1,2})_image(?P<Image>[0-9]).tif
+    Regular expression to extract from folder name:(?P<Date>[0-9]{4}_[0-9]{2}_[0-9]{2})$
+    Extract metadata from:All images
+    Select the filtering criteria:and (file does contain "")
+    Metadata file location:Elsewhere...|
+    Match file and image metadata:[]
+    Use case insensitive matching?:No
+    Metadata file name:None
+    Does cached metadata exist?:No
+
+NamesAndTypes:[module_num:3|svn_version:'Unknown'|variable_revision_number:8|show_window:False|notes:['The NamesAndTypes module allows you to assign a meaningful name to each image by which other modules will refer to it.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Assign a name to:Images matching rules
+    Select the image type:Binary mask
+    Name to assign these images:DNA
+    Match metadata:[]
+    Image set matching method:Order
+    Set intensity range from:Image metadata
+    Assignments count:3
+    Single images count:0
+    Maximum intensity:255.0
+    Process as 3D?:No
+    Relative pixel spacing in X:1.0
+    Relative pixel spacing in Y:1.0
+    Relative pixel spacing in Z:1.0
+    Select the rule criteria:and (file does contain "SUM")
+    Name to assign these images:SUM_projection
+    Name to assign these objects:Cell
+    Select the image type:Color image
+    Set intensity range from:Image metadata
+    Maximum intensity:255.0
+    Select the rule criteria:and (file does contain "Stardist")
+    Name to assign these images:nuclei
+    Name to assign these objects:nuclei
+    Select the image type:Objects
+    Set intensity range from:Image metadata
+    Maximum intensity:255.0
+    Select the rule criteria:and (file does contain "MAX")
+    Name to assign these images:MAX_projection
+    Name to assign these objects:Nucleus
+    Select the image type:Color image
+    Set intensity range from:Image metadata
+    Maximum intensity:255.0
+
+Groups:[module_num:4|svn_version:'Unknown'|variable_revision_number:2|show_window:False|notes:['The Groups module optionally allows you to split your list of images into image subsets (groups) which will be processed independently of each other. Examples of groupings include screening batches, microtiter plates, time-lapse movies, etc.']|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Do you want to group your images?:No
+    grouping metadata count:1
+    Metadata category:None
+
+ColorToGray:[module_num:5|svn_version:'Unknown'|variable_revision_number:4|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:SUM_projection
+    Conversion method:Split
+    Image type:Channels
+    Name the output image:DAPI
+    Relative weight of the red channel:1.0
+    Relative weight of the green channel:1.0
+    Relative weight of the blue channel:1.0
+    Convert red to gray?:Yes
+    Name the output image:OrigRed
+    Convert green to gray?:Yes
+    Name the output image:OrigGreen
+    Convert blue to gray?:Yes
+    Name the output image:OrigBlue
+    Convert hue to gray?:Yes
+    Name the output image:OrigHue
+    Convert saturation to gray?:Yes
+    Name the output image:OrigSaturation
+    Convert value to gray?:Yes
+    Name the output image:OrigValue
+    Channel count:4
+    Channel number:1
+    Relative weight of the channel:1.0
+    Image name:SUM_DAPI
+    Channel number:2
+    Relative weight of the channel:1.0
+    Image name:SUM_GFP
+    Channel number:3
+    Relative weight of the channel:1.0
+    Image name:SUM_Ki67
+    Channel number:4
+    Relative weight of the channel:1.0
+    Image name:SUM_Pax6
+
+ColorToGray:[module_num:6|svn_version:'Unknown'|variable_revision_number:4|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the input image:MAX_projection
+    Conversion method:Split
+    Image type:Channels
+    Name the output image:DAPI
+    Relative weight of the red channel:1.0
+    Relative weight of the green channel:1.0
+    Relative weight of the blue channel:1.0
+    Convert red to gray?:Yes
+    Name the output image:OrigRed
+    Convert green to gray?:Yes
+    Name the output image:OrigGreen
+    Convert blue to gray?:Yes
+    Name the output image:OrigBlue
+    Convert hue to gray?:Yes
+    Name the output image:OrigHue
+    Convert saturation to gray?:Yes
+    Name the output image:OrigSaturation
+    Convert value to gray?:Yes
+    Name the output image:OrigValue
+    Channel count:4
+    Channel number:1
+    Relative weight of the channel:1.0
+    Image name:MAX_DAPI
+    Channel number:2
+    Relative weight of the channel:1.0
+    Image name:MAX_GFP
+    Channel number:3
+    Relative weight of the channel:1.0
+    Image name:MAX_Ki67
+    Channel number:4
+    Relative weight of the channel:1.0
+    Image name:MAX_Pax6
+
+MeasureObjectIntensity:[module_num:7|svn_version:'Unknown'|variable_revision_number:4|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select images to measure:MAX_DAPI, MAX_GFP, MAX_Ki67, MAX_Pax6, SUM_DAPI, SUM_GFP, SUM_Ki67, SUM_Pax6
+    Select objects to measure:nuclei
+
+MeasureObjectSizeShape:[module_num:8|svn_version:'Unknown'|variable_revision_number:3|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select object sets to measure:nuclei
+    Calculate the Zernike features?:No
+    Calculate the advanced features?:No
+
+ExportToSpreadsheet:[module_num:9|svn_version:'Unknown'|variable_revision_number:13|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Select the column delimiter:Tab
+    Add image metadata columns to your object data file?:Yes
+    Add image file and folder names to your object data file?:Yes
+    Select the measurements to export:Yes
+    Calculate the per-image mean values for object measurements?:Yes
+    Calculate the per-image median values for object measurements?:Yes
+    Calculate the per-image standard deviation values for object measurements?:Yes
+    Output file location:Default Input Folder sub-folder|Desktop\\OUTPUT
+    Create a GenePattern GCT file?:No
+    Select source of sample row name:Metadata
+    Select the image to use as the identifier:None
+    Select the metadata to use as the identifier:None
+    Export all measurement types?:Yes
+    Press button to select measurements:nuclei|Intensity_MinIntensityEdge_SUM_Pax6,nuclei|Intensity_MinIntensityEdge_SUM_DAPI,nuclei|Intensity_MinIntensityEdge_SUM_Ki67,nuclei|Intensity_MinIntensityEdge_SUM_GFP,nuclei|Intensity_MinIntensityEdge_MAX_DAPI,nuclei|Intensity_MinIntensityEdge_MAX_GFP,nuclei|Intensity_MinIntensityEdge_MAX_Ki67,nuclei|Intensity_MinIntensityEdge_MAX_Pax6,nuclei|Intensity_MeanIntensity_MAX_Ki67,nuclei|Intensity_MeanIntensity_MAX_DAPI,nuclei|Intensity_MeanIntensity_MAX_GFP,nuclei|Intensity_MeanIntensity_MAX_Pax6,nuclei|Intensity_MeanIntensity_SUM_Pax6,nuclei|Intensity_MeanIntensity_SUM_GFP,nuclei|Intensity_MeanIntensity_SUM_Ki67,nuclei|Intensity_MeanIntensity_SUM_DAPI,nuclei|Intensity_StdIntensity_SUM_Pax6,nuclei|Intensity_StdIntensity_SUM_GFP,nuclei|Intensity_StdIntensity_SUM_DAPI,nuclei|Intensity_StdIntensity_SUM_Ki67,nuclei|Intensity_StdIntensity_MAX_DAPI,nuclei|Intensity_StdIntensity_MAX_GFP,nuclei|Intensity_StdIntensity_MAX_Pax6,nuclei|Intensity_StdIntensity_MAX_Ki67,nuclei|Intensity_MeanIntensityEdge_MAX_Ki67,nuclei|Intensity_MeanIntensityEdge_MAX_DAPI,nuclei|Intensity_MeanIntensityEdge_MAX_GFP,nuclei|Intensity_MeanIntensityEdge_MAX_Pax6,nuclei|Intensity_MeanIntensityEdge_SUM_DAPI,nuclei|Intensity_MeanIntensityEdge_SUM_Ki67,nuclei|Intensity_MeanIntensityEdge_SUM_GFP,nuclei|Intensity_MeanIntensityEdge_SUM_Pax6,nuclei|Intensity_StdIntensityEdge_MAX_GFP,nuclei|Intensity_StdIntensityEdge_MAX_Ki67,nuclei|Intensity_StdIntensityEdge_MAX_DAPI,nuclei|Intensity_StdIntensityEdge_MAX_Pax6,nuclei|Intensity_StdIntensityEdge_SUM_DAPI,nuclei|Intensity_StdIntensityEdge_SUM_GFP,nuclei|Intensity_StdIntensityEdge_SUM_Ki67,nuclei|Intensity_StdIntensityEdge_SUM_Pax6,nuclei|Intensity_MADIntensity_SUM_Ki67,nuclei|Intensity_MADIntensity_SUM_Pax6,nuclei|Intensity_MADIntensity_SUM_DAPI,nuclei|Intensity_MADIntensity_SUM_GFP,nuclei|Intensity_MADIntensity_MAX_GFP,nuclei|Intensity_MADIntensity_MAX_DAPI,nuclei|Intensity_MADIntensity_MAX_Pax6,nuclei|Intensity_MADIntensity_MAX_Ki67,nuclei|Intensity_IntegratedIntensity_MAX_Ki67,nuclei|Intensity_IntegratedIntensity_MAX_Pax6,nuclei|Intensity_IntegratedIntensity_MAX_DAPI,nuclei|Intensity_IntegratedIntensity_MAX_GFP,nuclei|Intensity_IntegratedIntensity_SUM_DAPI,nuclei|Intensity_IntegratedIntensity_SUM_GFP,nuclei|Intensity_IntegratedIntensity_SUM_Pax6,nuclei|Intensity_IntegratedIntensity_SUM_Ki67,nuclei|Intensity_MassDisplacement_MAX_GFP,nuclei|Intensity_MassDisplacement_MAX_Ki67,nuclei|Intensity_MassDisplacement_MAX_Pax6,nuclei|Intensity_MassDisplacement_MAX_DAPI,nuclei|Intensity_MassDisplacement_SUM_DAPI,nuclei|Intensity_MassDisplacement_SUM_GFP,nuclei|Intensity_MassDisplacement_SUM_Ki67,nuclei|Intensity_MassDisplacement_SUM_Pax6,nuclei|Intensity_IntegratedIntensityEdge_MAX_GFP,nuclei|Intensity_IntegratedIntensityEdge_MAX_Pax6,nuclei|Intensity_IntegratedIntensityEdge_MAX_DAPI,nuclei|Intensity_IntegratedIntensityEdge_MAX_Ki67,nuclei|Intensity_IntegratedIntensityEdge_SUM_Pax6,nuclei|Intensity_IntegratedIntensityEdge_SUM_DAPI,nuclei|Intensity_IntegratedIntensityEdge_SUM_GFP,nuclei|Intensity_IntegratedIntensityEdge_SUM_Ki67,nuclei|Intensity_MedianIntensity_SUM_GFP,nuclei|Intensity_MedianIntensity_SUM_Pax6,nuclei|Intensity_MedianIntensity_SUM_DAPI,nuclei|Intensity_MedianIntensity_SUM_Ki67,nuclei|Intensity_MedianIntensity_MAX_Ki67,nuclei|Intensity_MedianIntensity_MAX_GFP,nuclei|Intensity_MedianIntensity_MAX_DAPI,nuclei|Intensity_MedianIntensity_MAX_Pax6,nuclei|Intensity_MaxIntensityEdge_MAX_GFP,nuclei|Intensity_MaxIntensityEdge_MAX_Pax6,nuclei|Intensity_MaxIntensityEdge_MAX_Ki67,nuclei|Intensity_MaxIntensityEdge_MAX_DAPI,nuclei|Intensity_MaxIntensityEdge_SUM_GFP,nuclei|Intensity_MaxIntensityEdge_SUM_DAPI,nuclei|Intensity_MaxIntensityEdge_SUM_Ki67,nuclei|Intensity_MaxIntensityEdge_SUM_Pax6,nuclei|Intensity_UpperQuartileIntensity_MAX_Ki67,nuclei|Intensity_UpperQuartileIntensity_MAX_Pax6,nuclei|Intensity_UpperQuartileIntensity_MAX_DAPI,nuclei|Intensity_UpperQuartileIntensity_MAX_GFP,nuclei|Intensity_UpperQuartileIntensity_SUM_GFP,nuclei|Intensity_UpperQuartileIntensity_SUM_Ki67,nuclei|Intensity_UpperQuartileIntensity_SUM_DAPI,nuclei|Intensity_UpperQuartileIntensity_SUM_Pax6,nuclei|Intensity_LowerQuartileIntensity_SUM_GFP,nuclei|Intensity_LowerQuartileIntensity_SUM_DAPI,nuclei|Intensity_LowerQuartileIntensity_SUM_Pax6,nuclei|Intensity_LowerQuartileIntensity_SUM_Ki67,nuclei|Intensity_LowerQuartileIntensity_MAX_Pax6,nuclei|Intensity_LowerQuartileIntensity_MAX_GFP,nuclei|Intensity_LowerQuartileIntensity_MAX_Ki67,nuclei|Intensity_LowerQuartileIntensity_MAX_DAPI,nuclei|Intensity_MinIntensity_SUM_DAPI,nuclei|Intensity_MinIntensity_SUM_Pax6,nuclei|Intensity_MinIntensity_SUM_Ki67,nuclei|Intensity_MinIntensity_SUM_GFP,nuclei|Intensity_MinIntensity_MAX_Pax6,nuclei|Intensity_MinIntensity_MAX_DAPI,nuclei|Intensity_MinIntensity_MAX_Ki67,nuclei|Intensity_MinIntensity_MAX_GFP,nuclei|Intensity_MaxIntensity_MAX_GFP,nuclei|Intensity_MaxIntensity_MAX_Pax6,nuclei|Intensity_MaxIntensity_MAX_DAPI,nuclei|Intensity_MaxIntensity_MAX_Ki67,nuclei|Intensity_MaxIntensity_SUM_DAPI,nuclei|Intensity_MaxIntensity_SUM_Pax6,nuclei|Intensity_MaxIntensity_SUM_Ki67,nuclei|Intensity_MaxIntensity_SUM_GFP,nuclei|Location_MaxIntensity_Z_MAX_Ki67,nuclei|Location_MaxIntensity_Z_MAX_GFP,nuclei|Location_MaxIntensity_Z_MAX_DAPI,nuclei|Location_MaxIntensity_Z_MAX_Pax6,nuclei|Location_MaxIntensity_Z_SUM_GFP,nuclei|Location_MaxIntensity_Z_SUM_Ki67,nuclei|Location_MaxIntensity_Z_SUM_DAPI,nuclei|Location_MaxIntensity_Z_SUM_Pax6,nuclei|Location_MaxIntensity_X_SUM_GFP,nuclei|Location_MaxIntensity_X_SUM_DAPI,nuclei|Location_MaxIntensity_X_SUM_Pax6,nuclei|Location_MaxIntensity_X_SUM_Ki67,nuclei|Location_MaxIntensity_X_MAX_DAPI,nuclei|Location_MaxIntensity_X_MAX_Ki67,nuclei|Location_MaxIntensity_X_MAX_GFP,nuclei|Location_MaxIntensity_X_MAX_Pax6,nuclei|Location_MaxIntensity_Y_SUM_GFP,nuclei|Location_MaxIntensity_Y_SUM_DAPI,nuclei|Location_MaxIntensity_Y_SUM_Pax6,nuclei|Location_MaxIntensity_Y_SUM_Ki67,nuclei|Location_MaxIntensity_Y_MAX_GFP,nuclei|Location_MaxIntensity_Y_MAX_Ki67,nuclei|Location_MaxIntensity_Y_MAX_DAPI,nuclei|Location_MaxIntensity_Y_MAX_Pax6,nuclei|Location_Center_X,nuclei|Location_Center_Y,nuclei|Location_CenterMassIntensity_Z_SUM_DAPI,nuclei|Location_CenterMassIntensity_Z_SUM_GFP,nuclei|Location_CenterMassIntensity_Z_SUM_Ki67,nuclei|Location_CenterMassIntensity_Z_SUM_Pax6,nuclei|Location_CenterMassIntensity_Z_MAX_Ki67,nuclei|Location_CenterMassIntensity_Z_MAX_GFP,nuclei|Location_CenterMassIntensity_Z_MAX_Pax6,nuclei|Location_CenterMassIntensity_Z_MAX_DAPI,nuclei|Location_CenterMassIntensity_X_MAX_DAPI,nuclei|Location_CenterMassIntensity_X_MAX_GFP,nuclei|Location_CenterMassIntensity_X_MAX_Pax6,nuclei|Location_CenterMassIntensity_X_MAX_Ki67,nuclei|Location_CenterMassIntensity_X_SUM_DAPI,nuclei|Location_CenterMassIntensity_X_SUM_GFP,nuclei|Location_CenterMassIntensity_X_SUM_Ki67,nuclei|Location_CenterMassIntensity_X_SUM_Pax6,nuclei|Location_CenterMassIntensity_Y_SUM_DAPI,nuclei|Location_CenterMassIntensity_Y_SUM_GFP,nuclei|Location_CenterMassIntensity_Y_SUM_Ki67,nuclei|Location_CenterMassIntensity_Y_SUM_Pax6,nuclei|Location_CenterMassIntensity_Y_MAX_GFP,nuclei|Location_CenterMassIntensity_Y_MAX_Pax6,nuclei|Location_CenterMassIntensity_Y_MAX_Ki67,nuclei|Location_CenterMassIntensity_Y_MAX_DAPI,nuclei|AreaShape_BoundingBoxMinimum_X,nuclei|AreaShape_BoundingBoxMinimum_Y,nuclei|AreaShape_Perimeter,nuclei|AreaShape_Solidity,nuclei|AreaShape_MaximumRadius,nuclei|AreaShape_MajorAxisLength,nuclei|AreaShape_Orientation,nuclei|AreaShape_MinorAxisLength,nuclei|AreaShape_Eccentricity,nuclei|AreaShape_MedianRadius,nuclei|AreaShape_MeanRadius,nuclei|AreaShape_FormFactor,nuclei|AreaShape_BoundingBoxArea,nuclei|AreaShape_Center_X,nuclei|AreaShape_Center_Y,nuclei|AreaShape_Extent,nuclei|AreaShape_EquivalentDiameter,nuclei|AreaShape_Compactness,nuclei|AreaShape_MinFeretDiameter,nuclei|AreaShape_BoundingBoxMaximum_X,nuclei|AreaShape_BoundingBoxMaximum_Y,nuclei|AreaShape_MaxFeretDiameter,nuclei|AreaShape_EulerNumber,nuclei|AreaShape_Area,nuclei|Number_Object_Number,Image|Series_SUM_projection,Image|Series_MAX_projection,Image|Height_nuclei,Image|Height_SUM_projection,Image|Height_MAX_projection,Image|ModuleError_08MeasureObjectSizeShape,Image|ModuleError_03NamesAndTypes,Image|ModuleError_02Metadata,Image|ModuleError_05ColorToGray,Image|ModuleError_07MeasureObjectIntensity,Image|ModuleError_01Images,Image|ModuleError_04Groups,Image|ModuleError_06ColorToGray,Image|ExecutionTime_02Metadata,Image|ExecutionTime_08MeasureObjectSizeShape,Image|ExecutionTime_01Images,Image|ExecutionTime_03NamesAndTypes,Image|ExecutionTime_06ColorToGray,Image|ExecutionTime_04Groups,Image|ExecutionTime_07MeasureObjectIntensity,Image|ExecutionTime_05ColorToGray,Image|ObjectsFileName_nuclei,Image|Group_Number,Image|Group_Index,Image|PathName_SUM_projection,Image|PathName_MAX_projection,Image|URL_MAX_projection,Image|URL_SUM_projection,Image|MD5Digest_SUM_projection,Image|MD5Digest_nuclei,Image|MD5Digest_MAX_projection,Image|Metadata_Image,Image|Metadata_FileLocation,Image|Metadata_Sample02,Image|Metadata_Type,Image|Metadata_Frame,Image|Metadata_Sample01,Image|Metadata_Series,Image|Scaling_SUM_projection,Image|Scaling_MAX_projection,Image|Width_MAX_projection,Image|Width_SUM_projection,Image|Width_nuclei,Image|ObjectsSeries_nuclei,Image|ObjectsFrame_nuclei,Image|FileName_MAX_projection,Image|FileName_SUM_projection,Image|ObjectsURL_nuclei,Image|ObjectsPathName_nuclei,Image|Frame_SUM_projection,Image|Frame_MAX_projection,Image|Count_nuclei,Experiment|CellProfiler_Version,Experiment|Run_Timestamp,Experiment|Pipeline_Pipeline,Experiment|Modification_Timestamp
+    Representation of Nan/Inf:NaN
+    Add a prefix to file names?:Yes
+    Filename prefix:MyExpt_
+    Overwrite existing files without warning?:Yes
+    Data to export:Do not use
+    Combine these object measurements with those of the previous object?:No
+    File name:DATA.csv
+    Use the object name for the file name?:Yes
+
+ExportToDatabase:[module_num:10|svn_version:'Unknown'|variable_revision_number:28|show_window:False|notes:[]|batch_state:array([], dtype=uint8)|enabled:True|wants_pause:False]
+    Database type:SQLite
+    Database name:DefaultDB
+    Add a prefix to table names?:Yes
+    Table prefix:GFP_positive_cells_measurement
+    Output file location:Default Input Folder sub-folder|Desktop\\OUTPUT
+    Create a CellProfiler Analyst properties file?:Yes
+    Database host:
+    Username:
+    Password:
+    Name the SQLite database file:DefaultDB.db
+    Calculate the per-image mean values of object measurements?:Yes
+    Calculate the per-image median values of object measurements?:Yes
+    Calculate the per-image standard deviation values of object measurements?:Yes
+    Calculate the per-well mean values of object measurements?:No
+    Calculate the per-well median values of object measurements?:No
+    Calculate the per-well standard deviation values of object measurements?:No
+    Export measurements for all objects to the database?:Select...
+    Select the objects:nuclei
+    Maximum # of characters in a column name:64
+    Create one table per object, a single object table or a single object view?:Single object table
+    Enter an image url prepend if you plan to access your files via http:
+    Write image thumbnails directly to the database?:No
+    Select the images for which you want to save thumbnails:GFP
+    Auto-scale thumbnail pixel intensities?:Yes
+    Select the plate type:None
+    Select the plate metadata:None
+    Select the well metadata:None
+    Include information for all images, using default values?:Yes
+    Properties image group count:1
+    Properties group field count:1
+    Properties filter field count:0
+    Workspace measurement count:1
+    Experiment name:GFP_positive_cells_measurement
+    Which objects should be used for locations?:nuclei
+    Enter a phenotype class table name if using the Classifier tool in CellProfiler Analyst:
+    Export object relationships?:No
+    Overwrite without warning?:Never
+    Access CellProfiler Analyst images via URL?:No
+    Select the classification type:Object
+    Select an image to include:None
+    Use the image name for the display?:Yes
+    Image name:Channel1
+    Channel color:red
+    Do you want to add group fields?:No
+    Enter the name of the group:
+    Enter the per-image columns which define the group, separated by commas:ImageNumber, Image_Metadata_Plate, Image_Metadata_Well
+    Do you want to add filter fields?:No
+    Automatically create a filter for each plate?:No
+    Create a CellProfiler Analyst workspace file?:No
+    Select the measurement display tool:ScatterPlot
+    Type of measurement to plot on the X-axis:Image
+    Enter the object name:None
+    Select the X-axis measurement:None
+    Select the X-axis index:ImageNumber
+    Type of measurement to plot on the Y-axis:Image
+    Enter the object name:None
+    Select the Y-axis measurement:None
+    Select the Y-axis index:ImageNumber
